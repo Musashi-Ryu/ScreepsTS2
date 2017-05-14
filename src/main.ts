@@ -1,4 +1,4 @@
-import * as CreepManager from "./components/creeps/creepManager";
+﻿import * as CreepManager from "./components/creeps/creepManager";
 import * as SourceManager from "./components/sources/sourceManager";
 import * as TowerManager from "./components/towers/towerManager";
 import * as Config from "./config/config";
@@ -13,7 +13,7 @@ import { log } from "./utils/log";
 // You should extend prototypes before the game loop executes here.
 
 if (Config.USE_PATHFINDER) {
-  PathFinder.use(true);
+    PathFinder.use(true);
 }
 
 log.info("Scripts bootstrapped.");
@@ -27,23 +27,23 @@ log.info("Scripts bootstrapped.");
  * @export
  */
 export function loop() {
-  // Check memory for null or out of bounds custom objects
-  MemoryManager.checkOutOfBounds();
+    // Check memory for null or out of bounds custom objects
+    MemoryManager.checkOutOfBounds();
 
-  // For each room, load the state and run functionality.
-  for (let i in Game.rooms) {
-    let room: Room = Game.rooms[i];
+    // For each room, load the state and run functionality.
+    for (let i in Game.rooms) {
+        let room: Room = Game.rooms[i];
 
-    // Memory cleanup tasks
-    MemoryManager.refreshMiningPositions(room);
-    MemoryManager.cleanupCreepMemory(room);
-    JobManager.refreshJobs(room);
+        // Memory cleanup tasks
+        MemoryManager.refreshMiningPositions(room);
+        MemoryManager.cleanupCreepMemory(room);
+        JobManager.refreshJobs(room);
 
-    // Component initialisation tasks
-    SourceManager.refreshAvailableSources(room);
+        // Component initialisation tasks
+        SourceManager.refreshAvailableSources(room);
 
-    // For each tick, run managed creeps/structures.
-    CreepManager.run(room);
-    TowerManager.run(room);
-  }
+        // For each tick, run managed creeps/structures.
+        CreepManager.run(room);
+        TowerManager.run(room);
+    }
 }

@@ -1,4 +1,4 @@
-import * as Config from "../../config/config";
+﻿import * as Config from "../../config/config";
 import { log } from "../../utils/log";
 
 /**
@@ -9,7 +9,7 @@ import { log } from "../../utils/log";
  * @returns {Structure[]} an array of structures inside the room
  */
 export function loadStructures(room: Room): Structure[] {
-  return room.find<Structure>(FIND_STRUCTURES);
+    return room.find<Structure>(FIND_STRUCTURES);
 }
 
 /**
@@ -20,13 +20,13 @@ export function loadStructures(room: Room): Structure[] {
  * @returns {number} the number of structures available in the room
  */
 export function getStructureCount(room: Room): number {
-  let structureCount: number = _.size(room.find<Structure>(FIND_STRUCTURES));
+    let structureCount: number = _.size(room.find<Structure>(FIND_STRUCTURES));
 
-  if (Config.ENABLE_DEBUG_MODE) {
-    log.debug("[StructureManager]", structureCount + " structures in room.");
-  }
+    if (Config.ENABLE_DEBUG_MODE) {
+        log.debug("[StructureManager]", structureCount + " structures in room.");
+    }
 
-  return structureCount;
+    return structureCount;
 }
 
 /**
@@ -38,20 +38,20 @@ export function getStructureCount(room: Room): number {
  * @returns {Structure} the desired structure.
  */
 export function getStorageObject(structures: Structure[]): Structure {
-  let targets: Structure[] = structures.filter((structure: StructureContainer) => {
-    return ((structure.structureType === STRUCTURE_CONTAINER)
-      && _.sum(structure.store) < structure.storeCapacity);
-  });
-
-  // if we can't find any storage containers, use either the extension or spawn.
-  if (targets.length === 0) {
-    targets = structures.filter((structure: StructureExtension) => {
-      return ((structure.structureType === STRUCTURE_EXTENSION || structure.structureType === STRUCTURE_SPAWN) &&
-        structure.energy < structure.energyCapacity);
+    let targets: Structure[] = structures.filter((structure: StructureContainer) => {
+        return ((structure.structureType === STRUCTURE_CONTAINER)
+            && _.sum(structure.store) < structure.storeCapacity);
     });
-  }
 
-  return targets[0];
+    // if we can't find any storage containers, use either the extension or spawn.
+    if (targets.length === 0) {
+        targets = structures.filter((structure: StructureExtension) => {
+            return ((structure.structureType === STRUCTURE_EXTENSION || structure.structureType === STRUCTURE_SPAWN) &&
+                structure.energy < structure.energyCapacity);
+        });
+    }
+
+    return targets[0];
 }
 
 /**
@@ -63,35 +63,35 @@ export function getStorageObject(structures: Structure[]): Structure {
  * @returns {Structure} the desired structure.
  */
 export function getDropOffPoint(structures: Structure[]): Structure {
-  let targets: Structure[] = structures.filter((structure) => {
-    if (structure instanceof Spawn) {
-      return ((structure.structureType === STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity);
+    let targets: Structure[] = structures.filter((structure) => {
+        if (structure instanceof Spawn) {
+            return ((structure.structureType === STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity);
+        }
+    });
+
+    // If the spawn is full, we'll find any extensions/towers.
+    if (targets.length === 0) {
+        targets = structures.filter((structure) => {
+            if (structure instanceof StructureExtension) {
+                return ((structure.structureType === STRUCTURE_EXTENSION)
+                    && structure.energy < structure.energyCapacity);
+            }
+        });
     }
-  });
 
-  // If the spawn is full, we'll find any extensions/towers.
-  if (targets.length === 0) {
-    targets = structures.filter((structure) => {
-      if (structure instanceof StructureExtension) {
-        return ((structure.structureType === STRUCTURE_EXTENSION)
-          && structure.energy < structure.energyCapacity);
-      }
-    });
-  }
+    // Or if that's filled as well, look for towers.
+    if (targets.length === 0) {
+        targets = structures.filter((structure: StructureTower) => {
+            return ((structure.structureType === STRUCTURE_TOWER)
+                && structure.energy < structure.energyCapacity - (structure.energyCapacity * 0.5));
+        });
+    }
 
-  // Or if that's filled as well, look for towers.
-  if (targets.length === 0) {
-    targets = structures.filter((structure: StructureTower) => {
-      return ((structure.structureType === STRUCTURE_TOWER)
-        && structure.energy < structure.energyCapacity - (structure.energyCapacity * 0.5));
-    });
-  }
-
-  // Otherwise, look for storage containers.
-  if (targets.length === 0) {
-    targets = structures.filter((structure: StructureStorage) => {
-      return ((structure.structureType === STRUCTURE_STORAGE) && _.sum(structure.store) < structure.storeCapacity);
-    });
-  }
-  return targets[0];
+    // Otherwise, look for storage containers.
+    if (targets.length === 0) {
+        targets = structures.filter((structure: StructureStorage) => {
+            return ((structure.structureType === STRUCTURE_STORAGE) && _.sum(structure.store) < structure.storeCapacity);
+        });
+    }
+    return targets[0];
 }

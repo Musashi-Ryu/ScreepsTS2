@@ -1,4 +1,4 @@
-import * as StructureManager from "./../../structures/structureManager";
+﻿import * as StructureManager from "./../../structures/structureManager";
 import * as creepActions from "../creepActions";
 
 /**
@@ -8,21 +8,21 @@ import * as creepActions from "../creepActions";
  * @param {Creep} creep The current creep.
  */
 export function run(creep: Creep) {
-  let structures = StructureManager.loadStructures(creep.room);
+    let structures = StructureManager.loadStructures(creep.room);
 
-  if (_.sum(creep.carry) > 0) {
-    let structuresToRepair = _getWallsToRepair(structures);
+    if (_.sum(creep.carry) > 0) {
+        let structuresToRepair = _getWallsToRepair(structures);
 
-    if (structuresToRepair) {
-      if (creep.pos.isNearTo(structuresToRepair[0])) {
-        creep.repair(structuresToRepair[0]);
-      } else {
-        creepActions.moveTo(creep, structuresToRepair[0]);
-      }
+        if (structuresToRepair) {
+            if (creep.pos.isNearTo(structuresToRepair[0])) {
+                creep.repair(structuresToRepair[0]);
+            } else {
+                creepActions.moveTo(creep, structuresToRepair[0]);
+            }
+        }
+    } else {
+        creepActions.tryRetrieveEnergy(creep);
     }
-  } else {
-    creepActions.tryRetrieveEnergy(creep);
-  }
 }
 
 /**
@@ -35,9 +35,9 @@ export function run(creep: Creep) {
  */
 function _getWallsToRepair(structures: Structure[]): Structure[] | undefined {
 
-  let targets: Structure[] = structures.filter((structure: Structure) => {
-    return ((structure.structureType === STRUCTURE_WALL) && structure.hits < 700000);
-  });
+    let targets: Structure[] = structures.filter((structure: Structure) => {
+        return ((structure.structureType === STRUCTURE_WALL) && structure.hits < 700000);
+    });
 
-  return targets;
+    return targets;
 }

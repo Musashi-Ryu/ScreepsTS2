@@ -1,4 +1,4 @@
-import * as StructureManager from "./../../structures/structureManager";
+﻿import * as StructureManager from "./../../structures/structureManager";
 import * as creepActions from "../creepActions";
 
 /**
@@ -8,21 +8,21 @@ import * as creepActions from "../creepActions";
  * @param {Creep} creep The current creep.
  */
 export function run(creep: Creep) {
-  let structures: Structure[] = StructureManager.loadStructures(creep.room);
+    let structures: Structure[] = StructureManager.loadStructures(creep.room);
 
-  if (_.sum(creep.carry) > 0) {
-    let structuresToRepair = _getStructuresToRepair(structures);
+    if (_.sum(creep.carry) > 0) {
+        let structuresToRepair = _getStructuresToRepair(structures);
 
-    if (structuresToRepair) {
-      if (creep.pos.isNearTo(structuresToRepair[0])) {
-        creep.repair(structuresToRepair[0]);
-      } else {
-        creepActions.moveTo(creep, structuresToRepair[0]);
-      }
+        if (structuresToRepair) {
+            if (creep.pos.isNearTo(structuresToRepair[0])) {
+                creep.repair(structuresToRepair[0]);
+            } else {
+                creepActions.moveTo(creep, structuresToRepair[0]);
+            }
+        }
+    } else {
+        creepActions.tryRetrieveEnergy(creep);
     }
-  } else {
-    creepActions.tryRetrieveEnergy(creep);
-  }
 }
 
 /**
@@ -41,30 +41,30 @@ export function run(creep: Creep) {
  */
 function _getStructuresToRepair(structures: Structure[]): Structure[] | undefined {
 
-  let targets: Structure[];
+    let targets: Structure[];
 
-  // Initial search scope.
-  targets = structures.filter((structure: Structure) => {
-    return ((structure.hits < (structure.hitsMax - (structure.hitsMax * 0.1))
-      && (structure.structureType !== STRUCTURE_WALL && structure.structureType !== STRUCTURE_ROAD
-        && structure.structureType !== STRUCTURE_RAMPART)));
-  });
-
-  // If nothing is found, expand search to include roads.
-  if (targets.length === 0) {
+    // Initial search scope.
     targets = structures.filter((structure: Structure) => {
-      return ((structure.hits < (structure.hitsMax - (structure.hitsMax * 0.1))
-        && (structure.structureType !== STRUCTURE_WALL && structure.structureType !== STRUCTURE_RAMPART)));
+        return ((structure.hits < (structure.hitsMax - (structure.hitsMax * 0.1))
+            && (structure.structureType !== STRUCTURE_WALL && structure.structureType !== STRUCTURE_ROAD
+                && structure.structureType !== STRUCTURE_RAMPART)));
     });
-  }
 
-  // If we still find nothing, expand search to ramparts.
-  if (targets.length === 0) {
-    targets = structures.filter((structure: Structure) => {
-      return ((structure.hits < (structure.hitsMax - (structure.hitsMax * 0.1))
-        && (structure.structureType !== STRUCTURE_WALL)));
-    });
-  }
+    // If nothing is found, expand search to include roads.
+    if (targets.length === 0) {
+        targets = structures.filter((structure: Structure) => {
+            return ((structure.hits < (structure.hitsMax - (structure.hitsMax * 0.1))
+                && (structure.structureType !== STRUCTURE_WALL && structure.structureType !== STRUCTURE_RAMPART)));
+        });
+    }
 
-  return targets;
+    // If we still find nothing, expand search to ramparts.
+    if (targets.length === 0) {
+        targets = structures.filter((structure: Structure) => {
+            return ((structure.hits < (structure.hitsMax - (structure.hitsMax * 0.1))
+                && (structure.structureType !== STRUCTURE_WALL)));
+        });
+    }
+
+    return targets;
 }

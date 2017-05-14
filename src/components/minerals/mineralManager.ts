@@ -1,4 +1,4 @@
-import { log } from "../../utils/log";
+﻿import { log } from "../../utils/log";
 
 export let minerals: Mineral[];
 export let mineralCount: number = 0;
@@ -10,8 +10,8 @@ export let mineralCount: number = 0;
  * @param {Room} room The current room.
  */
 export function loadMinerals(room: Room) {
-  minerals = room.find<Mineral>(FIND_MINERALS);
-  mineralCount = _.size(minerals);
+    minerals = room.find<Mineral>(FIND_MINERALS);
+    mineralCount = _.size(minerals);
 
-  log.info("[MineralManager] " + mineralCount + " minerals found.");
+    log.info("[MineralManager] " + mineralCount + " minerals found.");
 }

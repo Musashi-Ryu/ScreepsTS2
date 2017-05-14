@@ -1,4 +1,4 @@
-import { log } from "../../utils/log";
+﻿import { log } from "../../utils/log";
 
 export let constructionSites: ConstructionSite[];
 export let constructionSiteCount: number = 0;
@@ -10,8 +10,8 @@ export let constructionSiteCount: number = 0;
  * @param {Room} room
  */
 export function loadConstructionSites(room: Room) {
-  constructionSites = room.find<ConstructionSite>(FIND_CONSTRUCTION_SITES);
-  constructionSiteCount = _.size(constructionSites);
+    constructionSites = room.find<ConstructionSite>(FIND_CONSTRUCTION_SITES);
+    constructionSiteCount = _.size(constructionSites);
 
-  log.info("[ConstructionSiteManager]", constructionSiteCount + " construction sites in room.");
+    log.info("[ConstructionSiteManager]", constructionSiteCount + " construction sites in room.");
 }

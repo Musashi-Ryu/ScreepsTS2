@@ -64,7 +64,6 @@
   <ItemGroup>
     <Folder Include=".vscode\" />
     <Folder Include="libs" />
-    <Folder Include="ScreepsTS2" />
     <Folder Include="src" />
     <Folder Include="src\components" />
     <Folder Include="src\components\constructionSites" />

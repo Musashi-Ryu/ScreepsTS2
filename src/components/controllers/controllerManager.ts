@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Gets the controller for this room.
  *
  * @export
@@ -7,5 +7,5 @@
  *   available, otherwise undefined.
  */
 export function getController(room: Room): StructureController | undefined {
-  return room.controller;
+    return room.controller;
 }

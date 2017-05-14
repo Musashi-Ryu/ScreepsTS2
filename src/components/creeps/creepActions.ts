@@ -9,12 +9,12 @@
  * @returns {number}
  */
 export function moveTo(creep: Creep, target: Structure | ConstructionSite | RoomPosition): number {
-  let result: number = 0;
+    let result: number = 0;
 
-  // Execute moves by cached paths at first
-  result = creep.moveTo(target);
+    // Execute moves by cached paths at first
+    result = creep.moveTo(target);
 
-  return result;
+    return result;
 }
 
 /**
@@ -26,12 +26,12 @@ export function moveTo(creep: Creep, target: Structure | ConstructionSite | Room
  * @returns {number}
  */
 export function moveToResource(creep: Creep, target: Resource | RoomPosition): number {
-  let result: number = 0;
+    let result: number = 0;
 
-  // Execute moves by cached paths at first
-  result = creep.moveTo(target);
+    // Execute moves by cached paths at first
+    result = creep.moveTo(target);
 
-  return result;
+    return result;
 }
 
 /**
@@ -43,7 +43,7 @@ export function moveToResource(creep: Creep, target: Resource | RoomPosition): n
  * @returns {boolean}
  */
 export function needsRenew(creep: Creep): boolean {
-  return (creep.ticksToLive < Config.DEFAULT_MIN_LIFE_BEFORE_NEEDS_REFILL);
+    return (creep.ticksToLive < Config.DEFAULT_MIN_LIFE_BEFORE_NEEDS_REFILL);
 }
 
 /**
@@ -55,7 +55,7 @@ export function needsRenew(creep: Creep): boolean {
  * @returns {number}
  */
 export function tryRenew(creep: Creep, spawn: Spawn): number {
-  return spawn.renewCreep(creep);
+    return spawn.renewCreep(creep);
 }
 
 /**
@@ -66,71 +66,71 @@ export function tryRenew(creep: Creep, spawn: Spawn): number {
  * @param {Spawn} spawn
  */
 export function moveToRenew(creep: Creep, spawn: Spawn): void {
-  if (tryRenew(creep, spawn) === ERR_NOT_IN_RANGE) {
-    creep.moveTo(spawn);
-  }
+    if (tryRenew(creep, spawn) === ERR_NOT_IN_RANGE) {
+        creep.moveTo(spawn);
+    }
 }
 
 export function tryRetrieveEnergy(creep: Creep): void {
-  let targetSource = creep.pos.findClosestByPath<Resource>(FIND_DROPPED_RESOURCES);
+    let targetSource = creep.pos.findClosestByPath<Resource>(FIND_DROPPED_RESOURCES);
 
-  if (targetSource) {
-    if (creep.pos.isNearTo(targetSource)) {
-      creep.pickup(targetSource);
-    } else {
-      moveToResource(creep, targetSource);
-    }
-  } else {
-    let targetContainer = creep.pos.findClosestByPath<Container>(FIND_STRUCTURES, {
-      filter: ((structure: Structure) => {
-        if (structure.structureType === STRUCTURE_CONTAINER) {
-          let container = <Container> structure;
-          if (_.sum(container.store) > (500)) {
-            return container;
-          }
-        }
-      }),
-    });
-
-    let targetStorage = creep.pos.findClosestByPath<Storage>(FIND_STRUCTURES, {
-      filter: ((structure: Structure) => {
-        if (structure.structureType === STRUCTURE_STORAGE) {
-          let storage = <Storage>structure;
-          if (_.sum(storage.store) < storage.storeCapacity) {
-            return storage;
-          }
-        }
-      }),
-    });
-
-    if (targetContainer != null && targetStorage != null) {
-        if (targetContainer.pos.getRangeTo(creep.pos) < targetStorage.pos.getRangeTo(creep.pos)) {
-            if (creep.pos.isNearTo(targetContainer)) {
-                creep.withdraw(targetContainer, RESOURCE_ENERGY);
-            } else {
-                moveTo(creep, targetContainer);
-            }
+    if (targetSource) {
+        if (creep.pos.isNearTo(targetSource)) {
+            creep.pickup(targetSource);
         } else {
+            moveToResource(creep, targetSource);
+        }
+    } else {
+        let targetContainer = creep.pos.findClosestByPath<Container>(FIND_STRUCTURES, {
+            filter: ((structure: Structure) => {
+                if (structure.structureType === STRUCTURE_CONTAINER) {
+                    let container = <Container>structure;
+                    if (_.sum(container.store) > (500)) {
+                        return container;
+                    }
+                }
+            }),
+        });
+
+        let targetStorage = creep.pos.findClosestByPath<Storage>(FIND_STRUCTURES, {
+            filter: ((structure: Structure) => {
+                if (structure.structureType === STRUCTURE_STORAGE) {
+                    let storage = <Storage>structure;
+                    if (_.sum(storage.store) < storage.storeCapacity) {
+                        return storage;
+                    }
+                }
+            }),
+        });
+
+        if (targetContainer != null && targetStorage != null) {
+            if (targetContainer.pos.getRangeTo(creep.pos) < targetStorage.pos.getRangeTo(creep.pos)) {
+                if (creep.pos.isNearTo(targetContainer)) {
+                    creep.withdraw(targetContainer, RESOURCE_ENERGY);
+                } else {
+                    moveTo(creep, targetContainer);
+                }
+            } else {
+                if (creep.pos.isNearTo(targetStorage)) {
+                    creep.withdraw(targetStorage, RESOURCE_ENERGY);
+                } else {
+                    moveTo(creep, targetStorage);
+                }
+            }
+        } else if (targetStorage != null) {
             if (creep.pos.isNearTo(targetStorage)) {
                 creep.withdraw(targetStorage, RESOURCE_ENERGY);
             } else {
                 moveTo(creep, targetStorage);
             }
-        }
-    } else if (targetStorage != null) {
-        if (creep.pos.isNearTo(targetStorage)) {
-            creep.withdraw(targetStorage, RESOURCE_ENERGY);
         } else {
-            moveTo(creep, targetStorage);
-        }
-    } else {
-        if (creep.pos.isNearTo(targetContainer)) {
-            creep.withdraw(targetContainer, RESOURCE_ENERGY);
-        } else {
-            moveTo(creep, targetContainer);
+            if (creep.pos.isNearTo(targetContainer)) {
+                creep.withdraw(targetContainer, RESOURCE_ENERGY);
+            } else {
+                moveTo(creep, targetContainer);
+            }
         }
     }
-  }
 }
 
 /**
@@ -141,15 +141,15 @@ export function tryRetrieveEnergy(creep: Creep): void {
  * @param {RoomObject} roomObject
  */
 export function getEnergy(creep: Creep, roomObject: RoomObject): void {
-  let energy: Resource = <Resource> roomObject;
+    let energy: Resource = <Resource>roomObject;
 
-  if (energy) {
-    if (creep.pos.isNearTo(energy)) {
-      creep.pickup(energy);
-    } else {
-      moveTo(creep, energy.pos);
+    if (energy) {
+        if (creep.pos.isNearTo(energy)) {
+            creep.pickup(energy);
+        } else {
+            moveTo(creep, energy.pos);
+        }
     }
-  }
 }
 
 /**
@@ -161,15 +161,15 @@ export function getEnergy(creep: Creep, roomObject: RoomObject): void {
  * @returns {boolean}
  */
 export function canWork(creep: Creep): boolean {
-  let working = creep.memory.working;
+    let working = creep.memory.working;
 
-  if (working && _.sum(creep.carry) === 0) {
-    creep.memory.working = false;
-    return false;
-  } else if (!working && _.sum(creep.carry) === creep.carryCapacity) {
-    creep.memory.working = true;
-    return true;
-  } else {
-    return creep.memory.working;
-  }
+    if (working && _.sum(creep.carry) === 0) {
+        creep.memory.working = false;
+        return false;
+    } else if (!working && _.sum(creep.carry) === creep.carryCapacity) {
+        creep.memory.working = true;
+        return true;
+    } else {
+        return creep.memory.working;
+    }
 }
