@@ -1,4 +1,4 @@
-import * as Config from "../../config/config";
+﻿import * as Config from "../../config/config";
 
 /**
  * Shorthand method for `Creep.moveTo()`.
@@ -89,15 +89,46 @@ export function tryRetrieveEnergy(creep: Creep): void {
             return container;
           }
         }
-      })
+      }),
     });
 
-    if (targetContainer) {
-      if (creep.pos.isNearTo(targetContainer)) {
-        creep.withdraw(targetContainer, RESOURCE_ENERGY);
-      } else {
-        moveTo(creep, targetContainer);
-      }
+    let targetStorage = creep.pos.findClosestByPath<Storage>(FIND_STRUCTURES, {
+      filter: ((structure: Structure) => {
+        if (structure.structureType === STRUCTURE_STORAGE) {
+          let storage = <Storage>structure;
+          if (_.sum(storage.store) < storage.storeCapacity) {
+            return storage;
+          }
+        }
+      }),
+    });
+
+    if (targetContainer != null && targetStorage != null) {
+        if (targetContainer.pos.getRangeTo(creep.pos) < targetStorage.pos.getRangeTo(creep.pos)) {
+            if (creep.pos.isNearTo(targetContainer)) {
+                creep.withdraw(targetContainer, RESOURCE_ENERGY);
+            } else {
+                moveTo(creep, targetContainer);
+            }
+        } else {
+            if (creep.pos.isNearTo(targetStorage)) {
+                creep.withdraw(targetStorage, RESOURCE_ENERGY);
+            } else {
+                moveTo(creep, targetStorage);
+            }
+        }
+    } else if (targetStorage != null) {
+        if (creep.pos.isNearTo(targetStorage)) {
+            creep.withdraw(targetStorage, RESOURCE_ENERGY);
+        } else {
+            moveTo(creep, targetStorage);
+        }
+    } else {
+        if (creep.pos.isNearTo(targetContainer)) {
+            creep.withdraw(targetContainer, RESOURCE_ENERGY);
+        } else {
+            moveTo(creep, targetContainer);
+        }
     }
   }
 }

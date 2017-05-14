@@ -50,5 +50,8 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "gulp": "github:gulpjs/gulp#4.0"
   }
 }

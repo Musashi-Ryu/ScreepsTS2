@@ -1,4 +1,4 @@
-export let hostiles: Creep[] = [];
+﻿export let hostiles: Creep[] = [];
 export let towers: Tower[] = [];
 
 /**
@@ -12,7 +12,7 @@ export function run(room: Room): void {
   towers = room.find<Tower>(FIND_MY_STRUCTURES, {
     filter: (structure: Structure) => {
       return structure.structureType === STRUCTURE_TOWER;
-    }
+    },
   });
 
   if (hostiles.length > 0) {

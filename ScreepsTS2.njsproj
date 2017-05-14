@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{eda0d72d-8228-4781-9cea-0fcd30a3daa6}</ProjectGuid>
     <ProjectHome />
-    <ProjectView>ShowAllFiles</ProjectView>
+    <ProjectView>ProjectFiles</ProjectView>
     <StartupFile>gulpfile.js</StartupFile>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -24,6 +24,7 @@
     <Content Include=".gitmodules" />
     <Content Include=".vscode\extensions.json" />
     <Content Include=".vscode\settings.json" />
+    <Content Include="config.json" />
     <Content Include="console.png" />
     <Content Include="config.example.json" />
     <Content Include="LICENSE" />
@@ -36,6 +37,7 @@
     <Compile Include="webpack.config.js" />
     <Compile Include="libs\gulp-dot-flatten.js" />
     <Compile Include="libs\gulp-screeps-upload.js" />
+    <TypeScriptCompile Include="src\config\config.ts" />
     <TypeScriptCompile Include="src\index.d.ts" />
     <TypeScriptCompile Include="src\main.ts" />
     <TypeScriptCompile Include="src\config\config.example.ts" />

@@ -1,4 +1,4 @@
-import * as creepActions from "../creepActions";
+﻿import * as creepActions from "../creepActions";
 
 /**
  * Runs all creep actions.
@@ -33,7 +33,7 @@ export function run(creep: Creep): void {
               return container;
             }
           }
-        }
+        },
       });
 
       if (targetContainers.length > 0) {
@@ -48,7 +48,7 @@ export function run(creep: Creep): void {
         let targetContainer = creep.pos.findClosestByPath<Container>(FIND_STRUCTURES, {
           filter: (structure: Container) => {
             return structure.structureType === STRUCTURE_CONTAINER;
-          }
+          },
         });
         creepActions.moveTo(creep, targetContainer);
       }
@@ -63,7 +63,7 @@ export function run(creep: Creep): void {
             return tower;
           }
         }
-      }
+      },
     });
 
     if (targetTowers.length > 0) {
@@ -91,7 +91,7 @@ export function run(creep: Creep): void {
                 return extension;
               }
             }
-          }
+          },
         });
 
         if (targetExtensions.length > 0) {
@@ -111,7 +111,7 @@ export function run(creep: Creep): void {
                   return storage;
                 }
               }
-            }
+            },
           });
 
           if (targetStorages.length > 0) {

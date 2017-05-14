@@ -1,8 +1,9 @@
-﻿# Ignore basic folders
+# Ignore basic folders
 /dist
 /node_modules
 /typings
 /.vs
+/obj
 
 # Screeps config file
 /config.json
@@ -76,3 +77,48 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+bin/Microsoft.NodejsTools.WebRole.dll
+src/components/constructionSites/constructionSiteManager.js
+src/components/constructionSites/constructionSiteManager.js.map
+src/components/controllers/controllerManager.js
+src/components/controllers/controllerManager.js.map
+src/components/creeps/creepActions.js
+src/components/creeps/creepActions.js.map
+src/components/creeps/creepManager.js
+src/components/creeps/creepManager.js.map
+src/components/creeps/roles/builder.js
+src/components/creeps/roles/builder.js.map
+src/components/creeps/roles/repairer.js
+src/components/creeps/roles/repairer.js.map
+src/components/creeps/roles/sourceHauler.js
+src/components/creeps/roles/sourceHauler.js.map
+src/components/creeps/roles/sourceMiner.js
+src/components/creeps/roles/sourceMiner.js.map
+src/components/creeps/roles/upgrader.js
+src/components/creeps/roles/upgrader.js.map
+src/components/creeps/roles/wallRepairer.js
+src/components/creeps/roles/wallRepairer.js.map
+src/components/minerals/mineralManager.js
+src/components/minerals/mineralManager.js.map
+src/components/resources/resourceManager.js
+src/components/resources/resourceManager.js.map
+src/components/sources/sourceManager.js
+src/components/sources/sourceManager.js.map
+src/components/structures/structureManager.js
+src/components/structures/structureManager.js.map
+src/components/towers/towerManager.js
+src/components/towers/towerManager.js.map
+src/config/config.example.js
+src/config/config.example.js.map
+src/config/config.js
+src/config/config.js.map
+src/main.js
+src/main.js.map
+src/shared/jobManager.js
+src/shared/jobManager.js.map
+src/shared/memoryManager.js
+src/shared/memoryManager.js.map
+src/utils/log.js
+src/utils/log.js.map
+src/utils/logLevels.js
+src/utils/logLevels.js.map

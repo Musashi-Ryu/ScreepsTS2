@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Iterates through a room and check its job entries for out-of-bounds objects.
  *
  * @export
@@ -12,21 +12,21 @@ export function refreshJobs(room: Room) {
 
   // Initialise all job entries
   if (!Memory.rooms[room.name].jobs.haulerJobs) {
-    Memory.rooms[room.name].jobs.haulerJobs = 0;
+    Memory.rooms[room.name].jobs.haulerJobs = 10;
   }
   if (!Memory.rooms[room.name].jobs.sourceMiningJobs) {
-    Memory.rooms[room.name].jobs.sourceMiningJobs = 0;
+    Memory.rooms[room.name].jobs.sourceMiningJobs = 2;
   }
   if (!Memory.rooms[room.name].jobs.upgraderJobs) {
-    Memory.rooms[room.name].jobs.upgraderJobs = 0;
+    Memory.rooms[room.name].jobs.upgraderJobs = 6;
   }
   if (!Memory.rooms[room.name].jobs.builderJobs) {
-    Memory.rooms[room.name].jobs.builderJobs = 0;
+    Memory.rooms[room.name].jobs.builderJobs = 2;
   }
   if (!Memory.rooms[room.name].jobs.repairJobs) {
-    Memory.rooms[room.name].jobs.repairJobs = 0;
+    Memory.rooms[room.name].jobs.repairJobs = 2;
   }
   if (!Memory.rooms[room.name].jobs.wallRepairJobs) {
-    Memory.rooms[room.name].jobs.wallRepairJobs = 0;
+    Memory.rooms[room.name].jobs.wallRepairJobs = 4;
   }
 }
