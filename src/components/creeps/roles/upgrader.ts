@@ -18,17 +18,7 @@ export function run(creep: Creep) {
     }
 
     if (_.sum(creep.carry) < creep.carryCapacity && !creep.memory.upgrading) {
-        let targetSource = creep.pos.findClosestByPath<Resource>(FIND_DROPPED_RESOURCES);
-
-        if (targetSource) {
-            if (creep.pos.isNearTo(targetSource)) {
-                creep.pickup(targetSource);
-            } else {
-                creepActions.moveToResource(creep, targetSource);
-            }
-        } else {
-            creepActions.tryRetrieveEnergy(creep);
-        }
+        creepActions.tryRetrieveEnergy(creep);
     } else {
         creep.memory.upgrading = true;
 

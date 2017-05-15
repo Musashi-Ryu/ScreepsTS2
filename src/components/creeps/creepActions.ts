@@ -72,62 +72,62 @@ export function moveToRenew(creep: Creep, spawn: Spawn): void {
 }
 
 export function tryRetrieveEnergy(creep: Creep): void {
-    let targetSource = creep.pos.findClosestByPath<Resource>(FIND_DROPPED_RESOURCES);
-
-    if (targetSource) {
-        if (creep.pos.isNearTo(targetSource)) {
-            creep.pickup(targetSource);
-        } else {
-            moveToResource(creep, targetSource);
-        }
-    } else {
-        let targetContainer = creep.pos.findClosestByPath<Container>(FIND_STRUCTURES, {
-            filter: ((structure: Structure) => {
-                if (structure.structureType === STRUCTURE_CONTAINER) {
-                    let container = <Container>structure;
-                    if (_.sum(container.store) > (500)) {
-                        return container;
-                    }
-                }
-            }),
-        });
-
-        let targetStorage = creep.pos.findClosestByPath<Storage>(FIND_STRUCTURES, {
-            filter: ((structure: Structure) => {
-                if (structure.structureType === STRUCTURE_STORAGE) {
-                    let storage = <Storage>structure;
-                    if (_.sum(storage.store) < storage.storeCapacity) {
-                        return storage;
-                    }
-                }
-            }),
-        });
-
-        if (targetContainer != null && targetStorage != null) {
-            if (targetContainer.pos.getRangeTo(creep.pos) < targetStorage.pos.getRangeTo(creep.pos)) {
-                if (creep.pos.isNearTo(targetContainer)) {
-                    creep.withdraw(targetContainer, RESOURCE_ENERGY);
-                } else {
-                    moveTo(creep, targetContainer);
-                }
-            } else {
-                if (creep.pos.isNearTo(targetStorage)) {
-                    creep.withdraw(targetStorage, RESOURCE_ENERGY);
-                } else {
-                    moveTo(creep, targetStorage);
+    let targetContainer = creep.pos.findClosestByPath<Container>(FIND_STRUCTURES, {
+        filter: ((structure: Structure) => {
+            if (structure.structureType === STRUCTURE_CONTAINER) {
+                let container = <Container>structure;
+                if (_.sum(container.store) > (500)) {
+                    return container;
                 }
             }
-        } else if (targetStorage != null) {
+        }),
+    });
+
+    let targetStorage = creep.pos.findClosestByPath<Storage>(FIND_STRUCTURES, {
+        filter: ((structure: Structure) => {
+            if (structure.structureType === STRUCTURE_STORAGE) {
+                let storage = <Storage>structure;
+                if (_.sum(storage.store) < storage.storeCapacity) {
+                    return storage;
+                }
+            }
+        }),
+    });
+
+    if (targetContainer != null && targetStorage != null) {
+        if (targetContainer.pos.getRangeTo(creep.pos) < targetStorage.pos.getRangeTo(creep.pos)) {
+            if (creep.pos.isNearTo(targetContainer)) {
+                creep.withdraw(targetContainer, RESOURCE_ENERGY);
+            } else {
+                moveTo(creep, targetContainer);
+            }
+        } else {
             if (creep.pos.isNearTo(targetStorage)) {
                 creep.withdraw(targetStorage, RESOURCE_ENERGY);
             } else {
                 moveTo(creep, targetStorage);
             }
+        }
+    } else if (targetStorage != null) {
+        if (creep.pos.isNearTo(targetStorage)) {
+            creep.withdraw(targetStorage, RESOURCE_ENERGY);
         } else {
-            if (creep.pos.isNearTo(targetContainer)) {
-                creep.withdraw(targetContainer, RESOURCE_ENERGY);
+            moveTo(creep, targetStorage);
+        }
+    } else if (targetContainer != null {
+        if (creep.pos.isNearTo(targetContainer)) {
+            creep.withdraw(targetContainer, RESOURCE_ENERGY);
+        } else {
+            moveTo(creep, targetContainer);
+        }
+    } else {
+        let targetSource = creep.pos.findClosestByPath<Resource>(FIND_DROPPED_RESOURCES);
+
+        if (targetSource) {
+            if (creep.pos.isNearTo(targetSource)) {
+                creep.pickup(targetSource);
             } else {
-                moveTo(creep, targetContainer);
+                moveToResource(creep, targetSource);
             }
         }
     }

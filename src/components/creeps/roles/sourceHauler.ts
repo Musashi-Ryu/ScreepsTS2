@@ -103,6 +103,17 @@ export function run(creep: Creep): void {
                         }
                     });
                 } else {
+                    let targetContainers = creep.room.find<Container>(FIND_STRUCTURES, {
+                        filter: (structure: Structure) => {
+                            if (structure.structureType === STRUCTURE_CONTAINER) {
+                                let container = <Container>structure;
+                                if (_.sum(container.store) < container.storeCapacity) {
+                                    return container;
+                                }
+                            }
+                        },
+                    });
+
                     let targetStorages = creep.room.find<Storage>(FIND_STRUCTURES, {
                         filter: (structure: Structure) => {
                             if (structure.structureType === STRUCTURE_STORAGE) {
@@ -114,7 +125,15 @@ export function run(creep: Creep): void {
                         },
                     });
 
-                    if (targetStorages.length > 0) {
+                    if (targetContainers.length > 0) {
+                        targetContainers.forEach((container: Container) => {
+                            if (creep.pos.isNearTo(container)) {
+                                creep.transfer(container, RESOURCE_ENERGY);
+                            } else {
+                                creepActions.moveTo(creep, container);
+                            }
+                        });
+                    } else if (targetStorages.length > 0) {
                         targetStorages.forEach((storage: Storage) => {
                             if (creep.pos.isNearTo(storage)) {
                                 creep.transfer(storage, RESOURCE_ENERGY);
