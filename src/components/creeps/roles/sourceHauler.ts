@@ -1,5 +1,5 @@
 ﻿import * as creepActions from "../creepActions";
-
+import * as structureManager from "../../structures/structureManager";
 /**
  * Runs all creep actions.
  *
@@ -63,7 +63,7 @@ export function run(creep: Creep): void {
                         break;
                     }
                     case STRUCTURE_EXTENSION: {
-                        target = <Extension>structure;
+                        target = <Extension> structure;
                         if (target.energy < target.energyCapacity) {
                             if (creep.pos.isNearTo(target)) {
                                 creep.transfer(target, RESOURCE_ENERGY);
@@ -76,7 +76,7 @@ export function run(creep: Creep): void {
                         break;
                     }
                     case STRUCTURE_CONTAINER: {
-                        target = <Container>structure;
+                        target = <Container> structure;
                         if (_.sum(target.store) < target.storeCapacity) {
                             if (creep.pos.isNearTo(target)) {
                                 creep.transfer(target, RESOURCE_ENERGY);
@@ -105,106 +105,16 @@ export function run(creep: Creep): void {
                         break;
                     }
                 }
-            }
-            else {
+            } else {
                 creep.memory.deliveryTarget = null;
             }
-        }
-        else {
-            let targetTowers = creep.room.find<Tower>(FIND_STRUCTURES, {
-                filter: (structure: Structure) => {
-                    if (structure.structureType === STRUCTURE_TOWER) {
-                        let tower: Tower = <Tower> structure;
-                        if (tower.energy < tower.energyCapacity) {
-                            return tower;
-                        }
-                    }
-                },
-            });
-
-            if (targetTowers.length > 0) {
-                targetTowers.forEach((tower: Tower) => {
-                    if (creep.pos.isNearTo(tower)) {
-                        creep.transfer(tower, RESOURCE_ENERGY);
-                    } else {
-                        creepActions.moveTo(creep, tower);
-                        creep.memory.deliveryTarget = tower.id;
-                    }
-                });
+        } else {
+            let structure: Structure = structureManager.getDropOffPoint(creep.room.find<Structure>(FIND_MY_STRUCTURES));
+            if (creep.pos.isNearTo(structure)) {
+                creep.transfer(structure, RESOURCE_ENERGY);
             } else {
-                let targetSpawn = creep.pos.findClosestByRange<Spawn>(FIND_MY_SPAWNS);
-                if (targetSpawn.energy < targetSpawn.energyCapacity) {
-                    if (creep.pos.isNearTo(targetSpawn)) {
-                        creep.transfer(targetSpawn, RESOURCE_ENERGY);
-                    } else {
-                        creepActions.moveTo(creep, targetSpawn);
-                        creep.memory.deliveryTarget = targetSpawn.id;
-                    }
-                } else {
-                    let targetExtensions = creep.room.find<Extension>(FIND_STRUCTURES, {
-                        filter: (structure: Structure) => {
-                            if (structure.structureType === STRUCTURE_EXTENSION) {
-                                let extension = <Extension> structure;
-                                if (extension.energy < extension.energyCapacity) {
-                                    return extension;
-                                }
-                            }
-                        },
-                    });
-
-                    if (targetExtensions.length > 0) {
-                        targetExtensions.forEach((extension: Extension) => {
-                            if (creep.pos.isNearTo(extension)) {
-                                creep.transfer(extension, RESOURCE_ENERGY);
-                            } else {
-                                creepActions.moveTo(creep, extension);
-                                creep.memory.deliveryTarget = extension.id;
-                            }
-                        });
-                    } else {
-                        let targetContainers = creep.room.find<Container>(FIND_STRUCTURES, {
-                            filter: (structure: Structure) => {
-                                if (structure.structureType === STRUCTURE_CONTAINER) {
-                                    let container = <Container> structure;
-                                    if (_.sum(container.store) < container.storeCapacity) {
-                                        return container;
-                                    }
-                                }
-                            },
-                        });
-
-                        let targetStorages = creep.room.find<Storage>(FIND_STRUCTURES, {
-                            filter: (structure: Structure) => {
-                                if (structure.structureType === STRUCTURE_STORAGE) {
-                                    let storage = <Storage> structure;
-                                    if (_.sum(storage.store) < storage.storeCapacity) {
-                                        return storage;
-                                    }
-                                }
-                            },
-                        });
-
-                        if (targetContainers.length > 0) {
-                            targetContainers.forEach((container: Container) => {
-                                if (creep.pos.isNearTo(container)) {
-                                    creep.transfer(container, RESOURCE_ENERGY);
-                                } else {
-                                    creepActions.moveTo(creep, container);
-                                    creep.memory.deliveryTarget = container.id;
-                                }
-                            });
-                        } else if (targetStorages.length > 0) {
-                            targetStorages.forEach((storage: Storage) => {
-                                if (creep.pos.isNearTo(storage)) {
-                                    creep.transfer(storage, RESOURCE_ENERGY);
-                                } else {
-                                    creepActions.moveTo(creep, storage);
-                                    creep.memory.deliveryTarget = storage.id;
-                                }
-                            });
-                        }
-                    }
-                }
+                creepActions.moveTo(creep, structure);
+                creep.memory.deliveryTarget = structure.id;
             }
         }
     }

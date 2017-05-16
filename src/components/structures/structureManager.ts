@@ -69,7 +69,7 @@ export function getDropOffPoint(structures: Structure[]): Structure {
         }
     });
 
-    // If the spawn is full, we'll find any extensions/towers.
+    // If the spawn is full, we'll find any extensions.
     if (targets.length === 0) {
         targets = structures.filter((structure) => {
             if (structure instanceof StructureExtension) {
@@ -83,7 +83,15 @@ export function getDropOffPoint(structures: Structure[]): Structure {
     if (targets.length === 0) {
         targets = structures.filter((structure: StructureTower) => {
             return ((structure.structureType === STRUCTURE_TOWER)
-                && structure.energy < structure.energyCapacity - (structure.energyCapacity * 0.5));
+                && structure.energy < structure.energyCapacity);
+        });
+    }
+
+    // Or if that's filled as well, look for containers.
+    if (targets.length === 0) {
+        targets = structures.filter((structure: StructureContainer) => {
+            return ((structure.structureType === STRUCTURE_CONTAINER) &&
+                _.sum(structure.store) < structure.storeCapacity);
         });
     }
 
