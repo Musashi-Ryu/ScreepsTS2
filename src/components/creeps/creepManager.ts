@@ -6,6 +6,7 @@ import * as upgrader from "./roles/upgrader";
 import * as builder from "./roles/builder";
 import * as repairer from "./roles/repairer";
 import * as wallRepairer from "./roles/wallRepairer";
+import * as rampartRepairer from "./roles/rampartRepairer";
 
 import { log } from "../../utils/log";
 
@@ -19,6 +20,7 @@ export let upgraders: Creep[] = [];
 export let builders: Creep[] = [];
 export let repairers: Creep[] = [];
 export let wallRepairers: Creep[] = [];
+export let rampartRepairers: Creep[] = [];
 
 /**
  * Initialization scripts for CreepManager module.
@@ -49,6 +51,9 @@ export function run(room: Room): void {
         if (creep.memory.role === "wallRepairer") {
             wallRepairer.run(creep);
         }
+        if (creep.memory.role === "rampartRepairer") {
+            rampartRepairer.run(creep);
+        }
     });
 }
 
@@ -68,6 +73,7 @@ function _loadCreeps(room: Room) {
     builders = _.filter(creeps, (creep) => creep.memory.role === "builder");
     repairers = _.filter(creeps, (creep) => creep.memory.role === "repairer");
     wallRepairers = _.filter(creeps, (creep) => creep.memory.role === "wallRepairer");
+    rampartRepairers = _.filter(creeps, (creep) => creep.memory.role === "rampartRepairer");
 
     if (Config.ENABLE_DEBUG_MODE) {
         log.debug(creepCount + " creeps found in the playground.");
@@ -142,6 +148,12 @@ function _buildMissingCreeps(room: Room) {
                         bodyParts = [WORK, WORK, CARRY, MOVE];
                     }
                     _spawnCreep(spawn, bodyParts, "wallRepairer");
+                } else if (rampartRepairers.length < Memory.rooms[room.name].jobs.rampartRepairJobs) {
+                    // In case we ran out of creeps.
+                    if (repairers.length < 1) {
+                        bodyParts = [WORK, WORK, CARRY, MOVE];
+                    }
+                    _spawnCreep(spawn, bodyParts, "rampartRepairer");
                 }
             } else {
                 if (sourceMiners.length < Memory.rooms[room.name].jobs.sourceMiningJobs) {

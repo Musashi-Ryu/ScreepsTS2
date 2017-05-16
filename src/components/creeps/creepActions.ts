@@ -114,7 +114,7 @@ export function tryRetrieveEnergy(creep: Creep): void {
         } else {
             moveTo(creep, targetStorage);
         }
-    } else if (targetContainer != null {
+    } else if (targetContainer != null) {
         if (creep.pos.isNearTo(targetContainer)) {
             creep.withdraw(targetContainer, RESOURCE_ENERGY);
         } else {

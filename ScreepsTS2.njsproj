@@ -37,6 +37,7 @@
     <Compile Include="webpack.config.js" />
     <Compile Include="libs\gulp-dot-flatten.js" />
     <Compile Include="libs\gulp-screeps-upload.js" />
+    <TypeScriptCompile Include="src\components\creeps\roles\rampartRepairer.ts" />
     <TypeScriptCompile Include="src\config\config.ts" />
     <TypeScriptCompile Include="src\index.d.ts" />
     <TypeScriptCompile Include="src\main.ts" />
