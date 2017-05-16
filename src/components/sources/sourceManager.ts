@@ -34,11 +34,9 @@ export function refreshAvailableSources(room: Room) {
                 }
             }
         });
-
-        Memory.rooms[room.name].jobs.sourceMiningJobs = Memory.rooms[room.name].unoccupied_mining_positions.length;
-    } else {
-        Memory.rooms[room.name].jobs.sourceMiningJobs = Memory.rooms[room.name].unoccupied_mining_positions.length;
     }
+
+    Memory.rooms[room.name].jobs.sourceMiningJobs = Memory.rooms[room.name].unoccupied_mining_positions.length;
 
     if (Config.ENABLE_DEBUG_MODE) {
         log.debug("[SourceManager] " + sourceCount + " source mining jobs available in room.");

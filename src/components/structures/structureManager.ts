@@ -30,6 +30,19 @@ export function getStructureCount(room: Room): number {
 }
 
 /**
+ * Gets the first spawn in the room.
+ *
+ * @export
+ * @param {Room} room
+ * @returns {StructureSpawn} the first spawn in the room
+ */
+export function getSpawn(room: Room): StructureSpawn {
+    let spawn: StructureSpawn[] = room.find<StructureSpawn>(FIND_MY_STRUCTURES));
+
+    return spawn[0];
+}
+
+/**
  * Get the first storage object available. This prioritizes StructureContainer,
  * but will fall back to an extension, or to the spawn if need be.
  *
