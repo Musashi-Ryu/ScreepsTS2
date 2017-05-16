@@ -90,7 +90,8 @@ export function getDropOffPoint(structures: Structure[]): Structure {
     // Otherwise, look for storage containers.
     if (targets.length === 0) {
         targets = structures.filter((structure: StructureStorage) => {
-            return ((structure.structureType === STRUCTURE_STORAGE) && _.sum(structure.store) < structure.storeCapacity);
+            return ((structure.structureType === STRUCTURE_STORAGE) &&
+                _.sum(structure.store) < structure.storeCapacity);
         });
     }
     return targets[0];

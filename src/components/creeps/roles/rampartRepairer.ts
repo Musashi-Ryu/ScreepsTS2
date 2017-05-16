@@ -11,7 +11,7 @@ export function run(creep: Creep) {
     let structures = StructureManager.loadStructures(creep.room);
 
     if (_.sum(creep.carry) > 0) {
-        let structuresToRepair = _getWallsToRepair(structures);
+        let structuresToRepair = _getRampartsToRepair(structures);
 
         if (structuresToRepair) {
             if (creep.pos.isNearTo(structuresToRepair[0])) {
@@ -26,17 +26,17 @@ export function run(creep: Creep) {
 }
 
 /**
- * Get an array of walls that needs repair.
+ * Get an array of ramparts that needs repair.
  *
- * Returns `undefined` if there are no walls to be repaired.
+ * Returns `undefined` if there are no ramparts to be repaired.
  *
  * @param {Structure[]} structures The list of structures.
- * @returns {(Structure[] | undefined)} an array of walls to repair.
+ * @returns {(Structure[] | undefined)} an array of ramparts to repair.
  */
-function _getWallsToRepair(structures: Structure[]): Structure[] | undefined {
+function _getRampartsToRepair(structures: Structure[]): Structure[] | undefined {
 
     let targets: Structure[] = structures.filter((structure: Structure) => {
-        return ((structure.structureType === STRUCTURE_WALL) && structure.hits < 700000);
+        return ((structure.structureType === STRUCTURE_RAMPART) && structure.hits < 3000000);
     });
 
     return targets;

@@ -27,7 +27,7 @@ export function refreshAvailableSources(room: Room) {
                 true
             );
 
-            for (let result of <LookAtResultWithPos[]>lookResults) {
+            for (let result of <LookAtResultWithPos[]> lookResults) {
                 if (result.terrain === "plain" || result.terrain === "swamp") {
                     Memory.rooms[room.name].unoccupied_mining_positions
                         .push(new RoomPosition(result.x, result.y, source.room.name));

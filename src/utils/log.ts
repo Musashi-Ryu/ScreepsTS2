@@ -16,7 +16,7 @@ interface SourcePos {
 export function resolve(fileLine: string): SourcePos {
     let split = _.trim(fileLine).match(stackLineRe);
     if (!split || !Log.sourceMap) {
-        return <SourcePos>{ compiled: fileLine, final: fileLine };
+        return <SourcePos> { compiled: fileLine, final: fileLine };
     }
 
     let pos = { column: parseInt(split[4], 10), line: parseInt(split[3], 10) };
@@ -95,7 +95,7 @@ export class Log extends LogLevels {
                 level: Config.LOG_LEVEL,
                 showSource: Config.LOG_PRINT_LINES,
                 showTick: Config.LOG_PRINT_TICK,
-            }
+            },
         });
     }
 
