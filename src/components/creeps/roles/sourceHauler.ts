@@ -35,75 +35,33 @@ export function run(creep: Creep): void {
             let structure = Game.getObjectById<Structure>(creep.memory.deliveryTarget);
             if (structure !== null) {
                 let target;
+                let notFull: boolean | null = null;
                 switch (structure.structureType) {
-                    case STRUCTURE_TOWER: {
-                        target = <Tower> structure;
-                        if (target.energy < target.energyCapacity) {
-                            if (creep.pos.isNearTo(target)) {
-                                creep.transfer(target, RESOURCE_ENERGY);
-                            } else {
-                                creepActions.moveTo(creep, target);
-                            }
-                        } else {
-                            creep.memory.deliveryTarget = null;
-                        }
-                        break;
-                    }
-                    case STRUCTURE_SPAWN: {
-                        target = <Spawn> structure;
-                        if (target.energy < target.energyCapacity) {
-                            if (creep.pos.isNearTo(target)) {
-                                creep.transfer(target, RESOURCE_ENERGY);
-                            } else {
-                                creepActions.moveTo(creep, target);
-                            }
-                        } else {
-                            creep.memory.deliveryTarget = null;
-                        }
-                        break;
-                    }
+                    case STRUCTURE_TOWER:
+                    case STRUCTURE_SPAWN:
                     case STRUCTURE_EXTENSION: {
-                        target = <Extension> structure;
-                        if (target.energy < target.energyCapacity) {
-                            if (creep.pos.isNearTo(target)) {
-                                creep.transfer(target, RESOURCE_ENERGY);
-                            } else {
-                                creepActions.moveTo(creep, target);
-                            }
-                        } else {
-                            creep.memory.deliveryTarget = null;
-                        }
+                        target = <Tower>structure;
+                        notFull = target.energy < target.energyCapacity;                        
                         break;
                     }
-                    case STRUCTURE_CONTAINER: {
-                        target = <Container> structure;
-                        if (_.sum(target.store) < target.storeCapacity) {
-                            if (creep.pos.isNearTo(target)) {
-                                creep.transfer(target, RESOURCE_ENERGY);
-                            } else {
-                                creepActions.moveTo(creep, target);
-                            }
-                        } else {
-                            creep.memory.deliveryTarget = null;
-                        }
-                        break;
-                    }
+                    case STRUCTURE_CONTAINER:
                     case STRUCTURE_STORAGE: {
-                        target = <Storage> structure;
-                        if (_.sum(target.store) < target.storeCapacity) {
-                            if (creep.pos.isNearTo(target)) {
-                                creep.transfer(target, RESOURCE_ENERGY);
-                            } else {
-                                creepActions.moveTo(creep, target);
-                            }
-                        } else {
-                            creep.memory.deliveryTarget = null;
-                        }
+                        target = <Container>structure;
+                        notFull = _.sum(target.store) < target.storeCapacity;
                         break;
                     }
                     default: {
                         break;
                     }
+                }
+                if (notFull !== null && notFull) {
+                    if (creep.pos.isNearTo(structure)) {
+                        creep.transfer(structure, RESOURCE_ENERGY);
+                    } else {
+                        creepActions.moveTo(creep, structure);
+                    }
+                } else {
+                    creep.memory.deliveryTarget = null;
                 }
             } else {
                 creep.memory.deliveryTarget = null;
