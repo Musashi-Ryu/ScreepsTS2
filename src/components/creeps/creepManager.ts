@@ -7,6 +7,7 @@ import * as builder from "./roles/builder";
 import * as repairer from "./roles/repairer";
 import * as wallRepairer from "./roles/wallRepairer";
 import * as rampartRepairer from "./roles/rampartRepairer";
+import * as defender from "./roles/defender";
 
 import { log } from "../../utils/log";
 
@@ -21,6 +22,7 @@ export let builders: Creep[] = [];
 export let repairers: Creep[] = [];
 export let wallRepairers: Creep[] = [];
 export let rampartRepairers: Creep[] = [];
+export let defenders: Creep[] = [];
 
 /**
  * Initialization scripts for CreepManager module.
@@ -54,6 +56,9 @@ export function run(room: Room): void {
         if (creep.memory.role === "rampartRepairer") {
             rampartRepairer.run(creep);
         }
+        if (creep.memory.role === "defender") {
+            defender.run(creep);
+        }
     });
 }
 
@@ -74,6 +79,7 @@ function _loadCreeps(room: Room) {
     repairers = _.filter(creeps, (creep) => creep.memory.role === "repairer");
     wallRepairers = _.filter(creeps, (creep) => creep.memory.role === "wallRepairer");
     rampartRepairers = _.filter(creeps, (creep) => creep.memory.role === "rampartRepairer");
+    defenders = _.filter(creeps, (creep) => creep.memory.role === "defender");
 
     if (Config.ENABLE_DEBUG_MODE) {
         log.debug(creepCount + " creeps found in the playground.");
@@ -144,14 +150,21 @@ function _buildMissingCreeps(room: Room) {
                     _spawnCreep(spawn, bodyParts, "repairer");
                 } else if (wallRepairers.length < Memory.rooms[room.name].jobs.wallRepairJobs) {
                     // In case we ran out of creeps.
-                    if (repairers.length < 1) {
+                    if (wallRepairers.length < 1) {
                         bodyParts = [WORK, WORK, CARRY, MOVE];
                     }
                     _spawnCreep(spawn, bodyParts, "wallRepairer");
                 } else if (rampartRepairers.length < Memory.rooms[room.name].jobs.rampartRepairJobs) {
                     // In case we ran out of creeps.
-                    if (repairers.length < 1) {
+                    if (rampartRepairers.length < 1) {
                         bodyParts = [WORK, WORK, CARRY, MOVE];
+                    }
+                    _spawnCreep(spawn, bodyParts, "rampartRepairer");
+                } else if (defenders.length < Memory.rooms[room.name].jobs.defenderJobs) {
+                    // In case we ran out of creeps.
+                    if (defenders.length < 1) {
+                        bodyParts = [TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH,
+                            MOVE, ATTACK, ATTACK];
                     }
                     _spawnCreep(spawn, bodyParts, "rampartRepairer");
                 }

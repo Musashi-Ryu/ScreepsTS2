@@ -40,13 +40,13 @@ export function run(creep: Creep): void {
                     case STRUCTURE_TOWER:
                     case STRUCTURE_SPAWN:
                     case STRUCTURE_EXTENSION: {
-                        target = <Tower>structure;
-                        notFull = target.energy < target.energyCapacity;                        
+                        target = <Tower> structure;
+                        notFull = target.energy < target.energyCapacity;
                         break;
                     }
                     case STRUCTURE_CONTAINER:
                     case STRUCTURE_STORAGE: {
-                        target = <Container>structure;
+                        target = <Container> structure;
                         notFull = _.sum(target.store) < target.storeCapacity;
                         break;
                     }

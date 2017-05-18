@@ -7,13 +7,11 @@ import * as creepActions from "../creepActions";
  * @export
  * @param {Creep} creep The current creep.
  */
-export let gateClosed: boolean = false;
-
 export function run(creep: Creep) {
     let structures: Structure[] = StructureManager.loadStructures(creep.room);
 
-    if (gateClosed) {
-        let emptyRamparts = _getEmptyRamparts(structures);
+    if (creep.room.memory.gateClosed) {
+        let emptyRamparts = _getEmptyRamparts(structures, creep.room);
 
         if (emptyRamparts) {
             creepActions.moveTo(creep, emptyRamparts[0]);
@@ -24,47 +22,46 @@ export function run(creep: Creep) {
 }
 
 /**
- * Get an array of structures that needs repair.
+ * Get an array of empty ramparts.
  *
- * This does *not* initially include defensive structures (walls, roads,
- * ramparts). If there are no such structures to be repaired, this expands to
- * include roads, then ramparts.
- *
- * Returns `undefined` if there are no structures to be repaired. This function
- * will never return a wall.
+ * 
+ * Returns `null` if there are no (empty) ramparts.
  *
  * @export
  * @param {Structure[]} structures The list of structures.
- * @returns {(Structure[] | undefined)} an array of structures to repair.
+ * @returns {(Structure[] | null)} an array of structures to repair.
  */
-function _getEmptyRamparts(structures: Structure[]): Structure[] | undefined {
+function _getEmptyRamparts(structures: Structure[], room: Room): Rampart[] | null {
 
     let targets: Structure[];
+    let ramparts: Rampart[] = [];
 
-    // Initial search scope.
+    // Filter for ramparts.
     targets = structures.filter((structure: Structure) => {
-        return ((structure.hits < (structure.hitsMax - (structure.hitsMax * 0.1))
-            && (structure.structureType !== STRUCTURE_WALL && structure.structureType !== STRUCTURE_ROAD
-                && structure.structureType !== STRUCTURE_RAMPART)));
+        return (structure.structureType === STRUCTURE_RAMPART);
     });
 
-    // If nothing is found, expand search to include roads.
+    // If nothing is found, return null.
+    // Else check if the rampart is occupied by a defender.
     if (targets.length === 0) {
-        targets = structures.filter((structure: Structure) => {
-            return ((structure.hits < (structure.hitsMax - (structure.hitsMax * 0.1))
-                && (structure.structureType !== STRUCTURE_WALL && structure.structureType !== STRUCTURE_RAMPART)));
+        return null;
+    } else {
+        targets.forEach((rampart: Rampart) => {
+            let lookResults = room.lookForAt(LOOK_CREEPS, rampart.pos);
+
+            if (lookResults.length !== 0) {
+                for (let result of <Creep[]> lookResults) {
+                    if (result.memory.role !== "defender") {
+                        ramparts.push(rampart);
+                    }
+                }
+            } else {
+                ramparts.push(rampart);
+            }
         });
     }
 
-    // If we still find nothing, expand search to ramparts.
-    if (targets.length === 0) {
-        targets = structures.filter((structure: Structure) => {
-            return ((structure.hits < (structure.hitsMax - (structure.hitsMax * 0.1))
-                && (structure.structureType !== STRUCTURE_WALL)));
-        });
-    }
-
-    return targets;
+    return ramparts;
 }
 
 /**
@@ -81,4 +78,3 @@ function _getEmptyRamparts(structures: Structure[]): Structure[] | undefined {
  * @param {Structure[]} structures The list of structures.
  * @returns {(Structure[] | undefined)} an array of structures to repair.
  */
-

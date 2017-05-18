@@ -37,7 +37,7 @@ export function getStructureCount(room: Room): number {
  * @returns {StructureSpawn} the first spawn in the room
  */
 export function getSpawn(room: Room): StructureSpawn {
-    let spawn: StructureSpawn[] = room.find<StructureSpawn>(FIND_MY_STRUCTURES));
+    let spawn: StructureSpawn[] = room.find<StructureSpawn>(FIND_MY_STRUCTURES);
 
     return spawn[0];
 }

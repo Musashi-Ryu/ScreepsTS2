@@ -32,4 +32,7 @@ export function refreshJobs(room: Room) {
     if (!Memory.rooms[room.name].jobs.rampartRepairJobs) {
         Memory.rooms[room.name].jobs.rampartRepairJobs = 0;
     }
+    if (!Memory.rooms[room.name].jobs.defenderJobs) {
+        Memory.rooms[room.name].jobs.defenderJobs = 0;
+    }
 }

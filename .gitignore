@@ -1,4 +1,4 @@
-# Ignore basic folders
+﻿# Ignore basic folders
 /dist
 /node_modules
 /typings
@@ -88,6 +88,10 @@ src/components/creeps/creepManager.js
 src/components/creeps/creepManager.js.map
 src/components/creeps/roles/builder.js
 src/components/creeps/roles/builder.js.map
+src/components/creeps/roles/defender.js
+src/components/creeps/roles/defender.js.map
+src/components/creeps/roles/rampartRepairer.js
+src/components/creeps/roles/rampartRepairer.js.map
 src/components/creeps/roles/repairer.js
 src/components/creeps/roles/repairer.js.map
 src/components/creeps/roles/sourceHauler.js

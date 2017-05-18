@@ -4,6 +4,7 @@ import * as TowerManager from "./components/towers/towerManager";
 import * as Config from "./config/config";
 import * as JobManager from "./shared/jobManager";
 import * as MemoryManager from "./shared/memoryManager";
+import * as RoomManager from "./shared/roomManager";
 
 import { log } from "./utils/log";
 
@@ -38,6 +39,7 @@ export function loop() {
         MemoryManager.refreshMiningPositions(room);
         MemoryManager.cleanupCreepMemory(room);
         JobManager.refreshJobs(room);
+        RoomManager.refreshRoomState(room);
 
         // Component initialisation tasks
         SourceManager.refreshAvailableSources(room);
