@@ -132,9 +132,9 @@ function _buildMissingCreeps(room: Room) {
                     _spawnCreep(spawn, bodyParts, "sourceMiner");
                 } else if (upgraders.length < Memory.rooms[room.name].jobs.upgraderJobs) {
                     if (room.energyCapacityAvailable < 550 && room.energyAvailable < 550) {
-                        bodyParts = [WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE];
+                        bodyParts = [WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE];
                     } else if (room.energyCapacityAvailable >= 550 && room.energyAvailable >= 550) {
-                        bodyParts = [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
+                        bodyParts = [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE];
                     }
                     // In case we ran out of creeps.
                     if (upgraders.length < 1) {
