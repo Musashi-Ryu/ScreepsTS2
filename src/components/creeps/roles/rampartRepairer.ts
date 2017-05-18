@@ -36,7 +36,7 @@ export function run(creep: Creep) {
 function _getRampartsToRepair(structures: Structure[]): Structure[] | undefined {
 
     let targets: Structure[] = structures.filter((structure: Structure) => {
-        return ((structure.structureType === STRUCTURE_RAMPART) && structure.hits < 3000000);
+        return ((structure.structureType === STRUCTURE_RAMPART) && structure.hits < 10000000);
     });
 
     return targets;

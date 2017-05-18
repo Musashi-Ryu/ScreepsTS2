@@ -8,16 +8,29 @@ import * as creepActions from "../creepActions";
  * @param {Creep} creep The current creep.
  */
 export function run(creep: Creep) {
+    if (typeof creep.memory.guarding === "undefined") {
+        creep.memory.guarding = false;
+    }
     let structures: Structure[] = StructureManager.loadStructures(creep.room);
 
     if (creep.room.memory.gateClosed) {
-        let emptyRamparts = _getEmptyRamparts(structures, creep.room);
+        let result: Structure[]  = creep.pos.lookFor<Structure>(LOOK_STRUCTURES);
+        if (result.length !== 0 && result[0].structureType === STRUCTURE_RAMPART) {
+            creep.memory.guarding = true;
+        } else {
+            let emptyRamparts = _getEmptyRamparts(structures, creep.room);
 
-        if (emptyRamparts) {
-            creepActions.moveTo(creep, emptyRamparts[0]);
+            if (emptyRamparts) {
+                if (creep.pos.getRangeTo(emptyRamparts[0].pos) !== 0) {
+                    creepActions.moveTo(creep, emptyRamparts[0]);
+                } else {
+                    creep.memory.guarding = true;
+                }
+            }
         }
     } else {
         creepActions.moveTo(creep, StructureManager.getSpawn(creep.room));
+        creep.memory.guarding = false;
     }
 }
 
@@ -52,6 +65,7 @@ function _getEmptyRamparts(structures: Structure[], room: Room): Rampart[] | nul
             if (lookResults.length !== 0) {
                 for (let result of <Creep[]> lookResults) {
                     if (result.memory.role !== "defender") {
+                        result.move(result.pos.getDirectionTo(StructureManager.getSpawn(room).pos));
                         ramparts.push(rampart);
                     }
                 }

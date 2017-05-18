@@ -22,7 +22,6 @@ export function run(creep: Creep) {
     if (_.sum(creep.carry) === 0) {
         creep.memory.building = false;
     }
-
     if (_.sum(creep.carry) < creep.carryCapacity && !creep.memory.building) {
         creepActions.tryRetrieveEnergy(creep);
     } else {
