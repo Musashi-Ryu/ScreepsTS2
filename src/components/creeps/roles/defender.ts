@@ -1,6 +1,8 @@
 ﻿import * as StructureManager from "./../../structures/structureManager";
 import * as creepActions from "../creepActions";
 
+export let hostiles: Creep[] = [];
+
 /**
  * Runs all creep actions.
  *
@@ -31,6 +33,15 @@ export function run(creep: Creep) {
     } else {
         creepActions.moveTo(creep, StructureManager.getSpawn(creep.room));
         creep.memory.guarding = false;
+    }
+
+    hostiles = creep.room.find<Creep>(FIND_HOSTILE_CREEPS);
+    if (hostiles.length > 0) {
+        hostiles.forEach((hostileCreep: Creep) => {
+            if (creep.pos.isNearTo(hostileCreep.pos)) {
+                creep.attack(hostileCreep);
+            }
+        });
     }
 }
 

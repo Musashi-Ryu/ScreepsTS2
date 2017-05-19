@@ -20,7 +20,11 @@ export function run(creep: Creep): void {
     }
 
     if (_.sum(creep.carry) < creep.carryCapacity && !creep.memory.delivering) {
-        let targetSource: Resource = creep.pos.findClosestByPath<Resource>(FIND_DROPPED_RESOURCES);
+        let targetSource: Resource = creep.pos.findClosestByPath<Resource>(FIND_DROPPED_RESOURCES, {
+            filter: (resource: Resource) =>  {
+                return resource.amount > 250;
+            },
+        });
 
         if (targetSource) {
             if (creep.pos.isNearTo(targetSource)) {
@@ -67,7 +71,7 @@ export function run(creep: Creep): void {
                 creep.memory.deliveryTarget = null;
             }
         } else {
-            let structure: Structure = structureManager.getDropOffPoint(creep.room.find<Structure>(FIND_MY_STRUCTURES));
+            let structure: Structure = structureManager.getDropOffPoint(creep.room.find<Structure>(FIND_STRUCTURES));
             if (creep.pos.isNearTo(structure)) {
                 creep.transfer(structure, RESOURCE_ENERGY);
             } else {
