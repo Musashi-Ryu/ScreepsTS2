@@ -166,7 +166,7 @@ function _buildMissingCreeps(room: Room) {
                         bodyParts = [TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH,
                             MOVE, ATTACK, ATTACK];
                     }
-                    _spawnCreep(spawn, bodyParts, "rampartRepairer");
+                    _spawnCreep(spawn, bodyParts, "defender");
                 }
             } else {
                 if (sourceMiners.length < Memory.rooms[room.name].jobs.sourceMiningJobs) {
