@@ -75,10 +75,7 @@ export function tryRetrieveEnergy(creep: Creep): void {
     let targetContainer = creep.pos.findClosestByPath<Container>(FIND_STRUCTURES, {
         filter: ((structure: Structure) => {
             if (structure.structureType === STRUCTURE_CONTAINER) {
-                let container = <Container> structure;
-                if (_.sum(container.store) > (500)) {
-                    return container;
-                }
+                return structure;
             }
         }),
     });
@@ -86,10 +83,7 @@ export function tryRetrieveEnergy(creep: Creep): void {
     let targetStorage = creep.pos.findClosestByPath<Storage>(FIND_STRUCTURES, {
         filter: ((structure: Structure) => {
             if (structure.structureType === STRUCTURE_STORAGE) {
-                let storage = <Storage> structure;
-                if (_.sum(storage.store) < storage.storeCapacity) {
-                    return storage;
-                }
+                return structure;
             }
         }),
     });
