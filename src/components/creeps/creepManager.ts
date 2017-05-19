@@ -131,36 +131,69 @@ function _buildMissingCreeps(room: Room) {
                     }
                     _spawnCreep(spawn, bodyParts, "sourceMiner");
                 } else if (upgraders.length < Memory.rooms[room.name].jobs.upgraderJobs) {
+                    if (room.energyCapacityAvailable < 550 && room.energyAvailable < 550) {
+                        bodyParts = [WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE];
+                    } else if (room.energyCapacityAvailable >= 550 && room.energyAvailable >= 550) {
+                        bodyParts = [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE];
+                    }
                     // In case we ran out of creeps.
                     if (upgraders.length < 1) {
                         bodyParts = [WORK, WORK, CARRY, MOVE];
                     }
                     _spawnCreep(spawn, bodyParts, "upgrader");
                 } else if (builders.length < Memory.rooms[room.name].jobs.builderJobs) {
+                    if (room.energyCapacityAvailable < 550 && room.energyAvailable < 550) {
+                        bodyParts = [WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE];
+                    } else if (room.energyCapacityAvailable >= 550 && room.energyAvailable >= 550) {
+                        bodyParts = [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE];
+                    }
                     // In case we ran out of creeps.
                     if (builders.length < 1) {
                         bodyParts = [WORK, WORK, CARRY, MOVE];
                     }
                     _spawnCreep(spawn, bodyParts, "builder");
                 } else if (repairers.length < Memory.rooms[room.name].jobs.repairJobs) {
+                    if (room.energyCapacityAvailable < 550 && room.energyAvailable < 550) {
+                        bodyParts = [WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE];
+                    } else if (room.energyCapacityAvailable >= 550 && room.energyAvailable >= 550) {
+                        bodyParts = [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE];
+                    }
                     // In case we ran out of creeps.
                     if (repairers.length < 1) {
                         bodyParts = [WORK, WORK, CARRY, MOVE];
                     }
                     _spawnCreep(spawn, bodyParts, "repairer");
                 } else if (wallRepairers.length < Memory.rooms[room.name].jobs.wallRepairJobs) {
+                    if (room.energyCapacityAvailable < 550 && room.energyAvailable < 550) {
+                        bodyParts = [WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE];
+                    } else if (room.energyCapacityAvailable >= 550 && room.energyAvailable >= 550) {
+                        bodyParts = [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE];
+                    }
                     // In case we ran out of creeps.
                     if (wallRepairers.length < 1) {
                         bodyParts = [WORK, WORK, CARRY, MOVE];
                     }
                     _spawnCreep(spawn, bodyParts, "wallRepairer");
                 } else if (rampartRepairers.length < Memory.rooms[room.name].jobs.rampartRepairJobs) {
+                    if (room.energyCapacityAvailable < 550 && room.energyAvailable < 550) {
+                        bodyParts = [WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE];
+                    } else if (room.energyCapacityAvailable >= 550 && room.energyAvailable >= 550) {
+                        bodyParts = [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE];
+                    }
                     // In case we ran out of creeps.
                     if (rampartRepairers.length < 1) {
                         bodyParts = [WORK, WORK, CARRY, MOVE];
                     }
                     _spawnCreep(spawn, bodyParts, "rampartRepairer");
                 } else if (defenders.length < Memory.rooms[room.name].jobs.defenderJobs) {
+                    if (room.energyCapacityAvailable < 550 && room.energyAvailable < 550) {
+                        bodyParts = [TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, MOVE, MOVE,
+                            ATTACK, ATTACK, ATTACK, ATTACK];
+                    } else if (room.energyCapacityAvailable >= 550 && room.energyAvailable >= 550) {
+                        bodyParts = [TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH,
+                            TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH,
+                            TOUGH, MOVE, MOVE, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK, ATTACK];
+                    }
                     // In case we ran out of creeps.
                     if (defenders.length < 1) {
                         bodyParts = [TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH,

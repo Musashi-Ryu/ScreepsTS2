@@ -36,7 +36,7 @@ export function run(creep: Creep) {
 function _getWallsToRepair(structures: Structure[]): Structure[] | undefined {
 
     let targets: Structure[] = structures.filter((structure: Structure) => {
-        return ((structure.structureType === STRUCTURE_WALL) && structure.hits < 2000000);
+        return ((structure.structureType === STRUCTURE_WALL) && structure.hits < 10000000);
     });
 
     return targets;

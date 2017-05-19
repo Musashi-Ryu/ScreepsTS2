@@ -30,7 +30,7 @@ export function run(creep: Creep) {
  *
  * This does *not* initially include defensive structures (walls, roads,
  * ramparts). If there are no such structures to be repaired, this expands to
- * include roads, then ramparts.
+ * include roads.
  *
  * Returns `undefined` if there are no structures to be repaired. This function
  * will never return a wall.
@@ -55,14 +55,6 @@ function _getStructuresToRepair(structures: Structure[]): Structure[] | undefine
         targets = structures.filter((structure: Structure) => {
             return ((structure.hits < (structure.hitsMax - (structure.hitsMax * 0.1))
                 && (structure.structureType !== STRUCTURE_WALL && structure.structureType !== STRUCTURE_RAMPART)));
-        });
-    }
-
-    // If we still find nothing, expand search to ramparts.
-    if (targets.length === 0) {
-        targets = structures.filter((structure: Structure) => {
-            return ((structure.hits < (structure.hitsMax - (structure.hitsMax * 0.1))
-                && (structure.structureType !== STRUCTURE_WALL)));
         });
     }
 
