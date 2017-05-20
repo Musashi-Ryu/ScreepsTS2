@@ -18,7 +18,7 @@ if (Config.USE_PATHFINDER) {
     PathFinder.use(true);
 }
 
-// log.info("Scripts bootstrapped.");
+log.info("Scripts bootstrapped.");
 
 /**
  * Screeps system expects this "loop" method in main.js to run the
