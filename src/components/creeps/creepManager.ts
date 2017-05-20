@@ -8,6 +8,7 @@ import * as repairer from "./roles/repairer";
 import * as wallRepairer from "./roles/wallRepairer";
 import * as rampartRepairer from "./roles/rampartRepairer";
 import * as defender from "./roles/defender";
+import * as linker from "./roles/linker";
 
 import { log } from "../../utils/log";
 
@@ -23,6 +24,7 @@ export let repairers: Creep[] = [];
 export let wallRepairers: Creep[] = [];
 export let rampartRepairers: Creep[] = [];
 export let defenders: Creep[] = [];
+export let linkers: Creep[] = [];
 
 /**
  * Initialization scripts for CreepManager module.
@@ -59,6 +61,9 @@ export function run(room: Room): void {
         if (creep.memory.role === "defender") {
             defender.run(creep);
         }
+        if (creep.memory.role === "linker") {
+            linker.run(creep);
+        }
     });
 }
 
@@ -80,6 +85,7 @@ function _loadCreeps(room: Room) {
     wallRepairers = _.filter(creeps, (creep) => creep.memory.role === "wallRepairer");
     rampartRepairers = _.filter(creeps, (creep) => creep.memory.role === "rampartRepairer");
     defenders = _.filter(creeps, (creep) => creep.memory.role === "defender");
+    linkers = _.filter(creeps, (creep) => creep.memory.role === "linker");
 
     if (Config.ENABLE_DEBUG_MODE) {
         log.debug(creepCount + " creeps found in the playground.");
@@ -200,6 +206,18 @@ function _buildMissingCreeps(room: Room) {
                             MOVE, ATTACK, ATTACK];
                     }
                     _spawnCreep(spawn, bodyParts, "defender");
+                } else if (linkers.length < Memory.rooms[room.name].jobs.linkerJobs) {
+                    if (room.energyCapacityAvailable < 550 && room.energyAvailable < 550) {
+                        bodyParts = [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE];
+                    } else if (room.energyCapacityAvailable >= 550 && room.energyAvailable >= 550) {
+                        bodyParts = [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY,
+                            CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE];
+                    }
+                    // In case we ran out of creeps.
+                    if (linkers.length < 1) {
+                        bodyParts = [CARRY, CARRY, CARRY, CARRY, CARRY, MOVE];
+                    }
+                    _spawnCreep(spawn, bodyParts, "linker");
                 }
             } else {
                 if (sourceMiners.length < Memory.rooms[room.name].jobs.sourceMiningJobs) {

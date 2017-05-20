@@ -25,7 +25,7 @@ export function checkOutOfBounds() {
 }
 
 /**
- * Refreshes every memory entry of mining positions available on the room.
+ * Refreshes every memory entry of mining positions and link positions available on the room.
  *
  * @export
  * @param {Room} room The current room.
@@ -36,6 +36,12 @@ export function refreshMiningPositions(room: Room) {
     }
     if (!Memory.rooms[room.name].unoccupied_mining_positions) {
         Memory.rooms[room.name].unoccupied_mining_positions = [];
+    }
+    if (!Memory.rooms[room.name].unoccupied_link_positions) {
+        Memory.rooms[room.name].unoccupied_link_positions = [];
+    }
+    if (!Memory.rooms[room.name].unoccupied_link_positions) {
+        Memory.rooms[room.name].links = [];
     }
 }
 

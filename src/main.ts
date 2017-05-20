@@ -5,6 +5,7 @@ import * as Config from "./config/config";
 import * as JobManager from "./shared/jobManager";
 import * as MemoryManager from "./shared/memoryManager";
 import * as RoomManager from "./shared/roomManager";
+import * as StructureManager from "./components/structures/structureManager";
 
 import { log } from "./utils/log";
 
@@ -43,6 +44,7 @@ export function loop() {
 
         // Component initialisation tasks
         SourceManager.refreshAvailableSources(room);
+        StructureManager.refreshAvailableLinks(room);
 
         // For each tick, run managed creeps/structures.
         CreepManager.run(room);

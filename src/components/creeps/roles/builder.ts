@@ -27,7 +27,6 @@ export function run(creep: Creep) {
     } else {
         creep.memory.building = true;
         let targetConstructionSite = _getConstructionSite(constructionSites);
-
         if (targetConstructionSite) {
             if (creep.pos.isNearTo(targetConstructionSite)) {
                 creep.build(targetConstructionSite);
