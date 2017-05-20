@@ -1,4 +1,4 @@
-/*jshint esversion: 6, node: true */
+﻿/*jshint esversion: 6, node: true */
 'use strict';
 
 const gutil = require('gulp-util');
@@ -166,7 +166,7 @@ gulp.task('compile-flattened', gulp.series(
       .pipe(gulpDotFlatten(0))
       .pipe(sourcemaps.write(".", {
         includeContent: false,
-        mapFile: f => { return f.replace('.js.map', '.map.js'); },
+        mapFile: f => { return f.replace('.js.map', '.map.js'); }
       }))
       .pipe(gulp.dest('dist/' + buildTarget));
   }

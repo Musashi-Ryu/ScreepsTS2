@@ -1,4 +1,4 @@
-module.exports = {
+﻿module.exports = {
   devtool: 'source-map',
   entry: './src/main.ts',
   output: {
@@ -6,7 +6,7 @@ module.exports = {
     pathinfo: true,
     libraryTarget: 'commonjs2',
     sourceMapFilename: '[file].map.js', // normally this is [file].map, but we need a js file, or it will be rejected by screeps server.
-    devtoolModuleFilenameTemplate: '[resource-path]',
+    devtoolModuleFilenameTemplate: '[resource-path]'
   },
 
   target: 'node',
@@ -17,7 +17,7 @@ module.exports = {
     process: false,
     Buffer: false,
     __filename: false,
-    __dirname: false,
+    __dirname: false
   },
 
   resolve: {
@@ -28,8 +28,8 @@ module.exports = {
   externals: [
     {
         // webpack will not try to rewrite require("main.js.map")
-        'main.js.map': './main.js.map',
-    },
+        'main.js.map': './main.js.map'
+    }
   ],
 
   module: {
@@ -38,6 +38,6 @@ module.exports = {
       { test: /\.js$/, loader: 'source-map-loader', enforce: 'pre' },
       // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
       { test: /\.tsx?$/, loader: 'ts-loader' }
-    ],
-  },
+    ]
+  }
 };

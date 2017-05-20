@@ -17,6 +17,9 @@ export function refreshJobs(room: Room) {
     if (!Memory.rooms[room.name].jobs.sourceMiningJobs) {
         Memory.rooms[room.name].jobs.sourceMiningJobs = 0;
     }
+    if (!Memory.rooms[room.name].jobs.sourceMiningRemoteJobs) {
+        Memory.rooms[room.name].jobs.sourceMiningRemoteJobs = 0;
+    }
     if (!Memory.rooms[room.name].jobs.upgraderJobs) {
         Memory.rooms[room.name].jobs.upgraderJobs = 0;
     }

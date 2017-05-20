@@ -1,5 +1,5 @@
-{
-  "name": "resir014-screeps",
+﻿{
+  "name": "musashi-screeps",
   "dependencies": {},
   "globalDependencies": {
     "lodash": "registry:dt/lodash#3.10.0+20160619033623",

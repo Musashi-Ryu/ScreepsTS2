@@ -25,7 +25,6 @@
     <Content Include=".vscode\extensions.json" />
     <Content Include=".vscode\settings.json" />
     <Content Include="config.json" />
-    <Content Include="console.png" />
     <Content Include="config.example.json" />
     <Content Include="LICENSE" />
     <Content Include="package.json" />
@@ -38,7 +37,9 @@
     <Compile Include="libs\gulp-dot-flatten.js" />
     <Compile Include="libs\gulp-screeps-upload.js" />
     <TypeScriptCompile Include="src\components\creeps\roles\defender.ts" />
+    <TypeScriptCompile Include="src\components\creeps\roles\linker.ts" />
     <TypeScriptCompile Include="src\components\creeps\roles\rampartRepairer.ts" />
+    <TypeScriptCompile Include="src\components\creeps\roles\sourceMinerRemote.ts" />
     <TypeScriptCompile Include="src\config\config.ts" />
     <TypeScriptCompile Include="src\index.d.ts" />
     <TypeScriptCompile Include="src\main.ts" />

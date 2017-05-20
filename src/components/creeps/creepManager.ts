@@ -1,6 +1,7 @@
 ﻿import * as Config from "../../config/config";
 
 import * as sourceMiner from "./roles/sourceMiner";
+import * as sourceMinerRemote from "./roles/sourceMinerRemote";
 import * as sourceHauler from "./roles/sourceHauler";
 import * as upgrader from "./roles/upgrader";
 import * as builder from "./roles/builder";
@@ -17,6 +18,7 @@ export let creepNames: string[] = [];
 export let creepCount: number = 0;
 
 export let sourceMiners: Creep[] = [];
+export let sourceMinersRemote: Creep[] = [];
 export let sourceHaulers: Creep[] = [];
 export let upgraders: Creep[] = [];
 export let builders: Creep[] = [];
@@ -39,6 +41,9 @@ export function run(room: Room): void {
     _.each(creeps, (creep: Creep) => {
         if (creep.memory.role === "sourceMiner") {
             sourceMiner.run(creep);
+        }
+        if (creep.memory.role === "sourceMinerRemote") {
+            sourceMinerRemote.run(creep);
         }
         if (creep.memory.role === "sourceHauler") {
             sourceHauler.run(creep);
@@ -78,6 +83,7 @@ function _loadCreeps(room: Room) {
 
     // Iterate through each creep and push them into the role array.
     sourceMiners = _.filter(creeps, (creep) => creep.memory.role === "sourceMiner");
+    sourceMinersRemote = _.filter(creeps, (creep) => creep.memory.role === "sourceMinerRemote");
     sourceHaulers = _.filter(creeps, (creep) => creep.memory.role === "sourceHauler");
     upgraders = _.filter(creeps, (creep) => creep.memory.role === "upgrader");
     builders = _.filter(creeps, (creep) => creep.memory.role === "builder");
@@ -136,6 +142,13 @@ function _buildMissingCreeps(room: Room) {
                         bodyParts = [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
                     }
                     _spawnCreep(spawn, bodyParts, "sourceMiner");
+                } else if (sourceMinersRemote.length < Memory.rooms[room.name].jobs.sourceMiningRemoteJobs) {
+                    if (room.energyCapacityAvailable < 550 && room.energyAvailable < 550) {
+                        bodyParts = [WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE];
+                    } else if (room.energyCapacityAvailable >= 550 && room.energyAvailable >= 550) {
+                        bodyParts = [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE];
+                    }
+                    _spawnCreep(spawn, bodyParts, "sourceMinerRemote");
                 } else if (upgraders.length < Memory.rooms[room.name].jobs.upgraderJobs) {
                     if (room.energyCapacityAvailable < 550 && room.energyAvailable < 550) {
                         bodyParts = [WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE];
