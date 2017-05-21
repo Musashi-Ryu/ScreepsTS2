@@ -31,7 +31,12 @@ export function run(creep: Creep) {
             }
         }
     } else {
-        creepActions.moveTo(creep, StructureManager.getSpawn(creep.room));
+        let gateOpen: Flag | null = creep.pos.findClosestByPath<Flag>(FIND_FLAGS);
+        if (gateOpen !== null) {
+            creepActions.moveTo(creep, gateOpen.pos);
+        } else {
+            creepActions.moveTo(creep, StructureManager.getSpawn(creep.room));
+        }
         creep.memory.guarding = false;
     }
 

@@ -14,7 +14,7 @@ export function run(creep: Creep): void {
         creep.memory.deliveryTarget = null;
     }
     if (typeof creep.memory.roomNameRemote === "undefined") {
-        creep.memory.roomNameRemote = null;
+        creep.memory.roomNameRemote = "W37N96";
     }
 
     if (_.sum(creep.carry) === 0) {
@@ -25,17 +25,19 @@ export function run(creep: Creep): void {
     if (_.sum(creep.carry) < creep.carryCapacity && !creep.memory.delivering) {
         if (creep.memory.roomNameRemote !== null) {
             let room: Room = Game.rooms[creep.memory.roomNameRemote];
-            let targetSource: Resource[] = room.find<Resource>(FIND_DROPPED_RESOURCES, {
-                filter: (resource: Resource) => {
-                    return resource.amount > 250;
-                },
-            });
+            if (room !== undefined) {
+                let targetSource: Resource[] = room.find<Resource>(FIND_DROPPED_RESOURCES, {
+                    filter: (resource: Resource) => {
+                        return resource.amount > 50;
+                    },
+                });
 
-            if (targetSource[0]) {
-                if (creep.pos.isNearTo(targetSource[0])) {
-                    creep.pickup(targetSource[0]);
-                } else {
-                    creepActions.moveToResource(creep, targetSource[0]);
+                if (targetSource[0]) {
+                    if (creep.pos.isNearTo(targetSource[0])) {
+                        creep.pickup(targetSource[0]);
+                    } else {
+                        creepActions.moveToResource(creep, targetSource[0]);
+                    }
                 }
             }
         }

@@ -83,7 +83,14 @@ export function run(room: Room): void {
  * @param {Room} room
  */
 function _loadCreeps(room: Room) {
-    creeps = room.find<Creep>(FIND_MY_CREEPS);
+    //hack
+    let otherRoom: Room = Game.rooms["W37N96"];
+    if (otherRoom !== undefined) {
+        let otherCreeps: Creep[] = otherRoom.find<Creep>(FIND_MY_CREEPS);
+        creeps = room.find<Creep>(FIND_MY_CREEPS).concat(otherCreeps);
+    } else {
+        creeps = room.find<Creep>(FIND_MY_CREEPS);
+    }
     creepCount = _.size(creeps);
 
     // Iterate through each creep and push them into the role array.

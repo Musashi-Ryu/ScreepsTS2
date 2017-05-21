@@ -9,7 +9,11 @@
 export function run(creep: Creep): void {
     let assignedPosition: RoomPosition | null = null;
     if (typeof creep.memory.occupied_mining_position === "undefined") {
-        creep.memory.occupied_mining_position = {};
+        creep.memory.occupied_mining_position = {
+            x: 40,
+            y: 13,
+            roomName: "W37N96",
+        };
     }
     assignedPosition = new RoomPosition(
         creep.memory.occupied_mining_position.x,
