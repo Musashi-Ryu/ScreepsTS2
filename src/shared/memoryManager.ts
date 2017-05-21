@@ -40,7 +40,7 @@ export function refreshMiningPositions(room: Room) {
     if (!Memory.rooms[room.name].unoccupied_link_positions) {
         Memory.rooms[room.name].unoccupied_link_positions = [];
     }
-    if (!Memory.rooms[room.name].unoccupied_link_positions) {
+    if (!Memory.rooms[room.name].links) {
         Memory.rooms[room.name].links = [];
     }
 }

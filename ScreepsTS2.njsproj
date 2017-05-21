@@ -39,6 +39,7 @@
     <TypeScriptCompile Include="src\components\creeps\roles\defender.ts" />
     <TypeScriptCompile Include="src\components\creeps\roles\linker.ts" />
     <TypeScriptCompile Include="src\components\creeps\roles\rampartRepairer.ts" />
+    <TypeScriptCompile Include="src\components\creeps\roles\sourceHaulerRemote.ts" />
     <TypeScriptCompile Include="src\components\creeps\roles\sourceMinerRemote.ts" />
     <TypeScriptCompile Include="src\config\config.ts" />
     <TypeScriptCompile Include="src\index.d.ts" />

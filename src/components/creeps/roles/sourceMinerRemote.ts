@@ -7,24 +7,21 @@
  * @param {Creep} creep The current creep.
  */
 export function run(creep: Creep): void {
-    let assignedPosition: RoomPosition;
+    let assignedPosition: RoomPosition | null = null;
     if (typeof creep.memory.occupied_mining_position === "undefined") {
         creep.memory.occupied_mining_position = {};
     }
+    assignedPosition = new RoomPosition(
+        creep.memory.occupied_mining_position.x,
+        creep.memory.occupied_mining_position.y,
+        creep.memory.occupied_mining_position.roomName
+    );
 
-    if (creep.memory.occupied_mining_position.roomName !== null) {
-        assignedPosition = new RoomPosition(
-            creep.memory.occupied_mining_position.x,
-            creep.memory.occupied_mining_position.y,
-            creep.memory.occupied_mining_position.roomName
-        );
-
-        if (creep.pos.isEqualTo(assignedPosition)) {
-            let targetSource = creep.pos.findClosestByPath<Source>(FIND_SOURCES);
-            _tryHarvest(creep, targetSource);
-        } else {
-            creepActions.moveTo(creep, assignedPosition);
-        }
+    if (creep.pos.isEqualTo(assignedPosition)) {
+        let targetSource = creep.pos.findClosestByPath<Source>(FIND_SOURCES);
+        _tryHarvest(creep, targetSource);
+    } else {
+        creepActions.moveTo(creep, assignedPosition);
     }
 }
 

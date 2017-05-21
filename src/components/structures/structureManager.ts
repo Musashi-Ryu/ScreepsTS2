@@ -213,7 +213,9 @@ export function refreshAvailableLinks(room: Room) {
                           roomPosition: position,
                           type: "unload",
                       });
-                      Memory.rooms[room.name].links.push({ unload: link.id });
+                      if (Memory.rooms[room.name].links.length < links.length) {
+                          Memory.rooms[room.name].links.push({ unload: link.id });
+                      }
                   }
 
                   // get miners
@@ -235,7 +237,9 @@ export function refreshAvailableLinks(room: Room) {
                               roomPosition: position,
                               type: "load",
                           });
-                          Memory.rooms[room.name].links.push({ load: link.id });
+                          if (Memory.rooms[room.name].links.length < links.length) {
+                              Memory.rooms[room.name].links.push({ load: link.id });
+                          }
                       }
                   }
               }
